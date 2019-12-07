@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src='https://statics.teams.cdn.office.net/sdk/v1.5.2/js/MicrosoftTeams.min.js'></script>
+</head>
+        
+    <body>
+        <button onclick="(document.getElementById('icon').src = '/_PowerApps.png'); colorClickGray()">
+            Select Gray</button>
+        <img id="icon" src="/_Teams.png" alt="icon" style="width:100px" />
+        <button onclick="(document.getElementById('icon').src = '/_PowerApps.png'); colorClickRed()">
+            Select Red</button>
+
+        <script>
+            var idPowerApp = "a20ed0d5-e948-4c03-8e9d-1f9e2f3c93b7"
+           // var idTenant = "tenantId=2366459a-788c-49bd-92b6-b8700cf6ec17&"
+    	    var tabUrl = "https://apps.powerapps.com/play/providers/Microsoft.PowerApps/apps/" + idPowerApp	+ "?source=teamstab";
+            var ctxParams = "Team={groupID}&Channel={channelID}&UPN={universalPrincipalName}?name={loginHint}&tenant={tid}&theme={theme}";
+            console.log( "Teams.initialize()" );
+            microsoftTeams.initialize();
+            let saveGray = () => {
+                console.log( "set OnSave" );
+                microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
+                    console.log( "set config" );
+                    microsoftTeams.settings.setSettings({
+                        websiteUrl: "https://yourWebsite.com",
+                        contentUrl: tabUrl ,
+                        entityId: "a20ed0d5-e948-4c03-8e9d-1f9e2f3c93b7",
+                        suggestedDisplayName: "PowerTab"
+                    });
+                    console.log( "config saved" );
+                    saveEvent.notifySuccess();
+                    console.log( "ready to close" );
+                });
+            }
+            let saveRed = () => {
+                microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
+                    microsoftTeams.settings.setSettings({
+                        websiteUrl: tabUrl , //todo:fix url
+                        contentUrl: tabUrl ,
+                        entityId: "a20ed0d5-e948-4c03-8e9d-1f9e2f3c93b7",
+                        suggestedDisplayName: "PowerTab"
+                    });
+                    saveEvent.notifySuccess();
+                });
+            }
+
+            // let gr = document.getElementById("gray").style;
+            // let rd = document.getElementById("red").style;
+
+            const colorClickGray = () => {
+                // gr.display = "block";
+                // rd.display = "none";
+                console.log( "Ready to Save" );
+                microsoftTeams.settings.setValidityState(true);
+                saveGray()
+            }
+
+            const colorClickRed = () => {
+                // rd.display = "block";
+                // gr.display = "none";
+                console.log( "Ready to Save" );
+                microsoftTeams.settings.setValidityState(true);
+                saveRed();
+            }
+        </script>
+    </body>
+
+</html>
