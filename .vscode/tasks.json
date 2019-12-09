@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "ngrok folder",
+            "label": "ngrok PowerTab",
             "type": "shell",
             "command": "\\develop\\tools\\ngrok http \"file:///C:\\develop\\Teams\\PowerTab\" -subdomain powertab",
             "problemMatcher": []
