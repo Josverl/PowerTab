@@ -2,62 +2,35 @@
 <html lang="en">
 <head>
     <script src='https://statics.teams.cdn.office.net/sdk/v1.5.2/js/MicrosoftTeams.min.js'></script>
-</head>
-        
-    <body>
-
-
-
-        
-        <button onclick="(document.getElementById('icon').src = '/_PowerApps.png'); colorClickGray()">
-            Select Gray</button>
-
-        <img id="icon" src="/_Teams.png" alt="icon" style="width:100px" />
-        <!-- <button onclick="(document.getElementById('icon').src = '/_PowerApps.png'); colorClickRed()">
-            Select Red</button> -->
-
-        <script>
-            // var idTenant = "tenantId=2366459a-788c-49bd-92b6-b8700cf6ec17&"
-            var idPowerApp = "a20ed0d5-e948-4c03-8e9d-1f9e2f3c93b7";
-            let getUrl = (idPowerApp, isTab, addContext) => {
-                var tabUrl = "https://apps.powerapps.com/play/providers/Microsoft.PowerApps/apps/" + idPowerApp	
-                var ctxParams = "&teamId={teamId}&channelId={channelId}&upn={userPrincipalName}&loginHint={loginHint}&tenantId={tid}&theme={theme}&tid={tid}"
-                 ctxParams +="&test={teamName}%20-%20{channelName}";
-
-                // OK "teamId": "The Microsoft Teams ID in the format 19:[id]@thread.skype",
-                // OK "teamName": "The name of the current team",
-                // OK "channelId": "The channel ID in the format 19:[id]@thread.skype",
-                // "channelName": "The name of the current channel",
-                // "chatId": "The chat ID in the in the format 19:[id]@thread.skype",
-                // "locale": "The current locale of the user formatted as languageId-countryId (for example, en-us)",
-                // "entityId": "The developer-defined unique ID for the entity this content points to",
-                // "subEntityId": "The developer-defined unique ID for the sub-entity this content points to",
-                // "loginHint": "A value suitable as a login hint for Azure AD. This is usually the login name of the current user, in their home tenant",
-                // "userPrincipalName": "The User Principal Name of the current user, in the current tenant",
-                // "userObjectId": "The Azure AD object id of the current user, in the current tenant",
-                // "tid": "The Azure AD tenant ID of the current user",
-                // "groupId": "Guid identifying the current O365 Group ID",
-                // "theme": "The current UI theme: default | dark | contrast",
-                // "isFullScreen": "Indicates whether the tab is in full-screen mode",
-                // "userLicenseType": "Indicates the user licence type in the given SKU (for example, student or teacher)",
-                // "tenantSKU": "Indicates the SKU category of the tenant (for example, EDU)",
-                // "channelType": "microsoftTeams.ChannelType.Private | microsoftTeams.ChannelType.Regular"
-
-
-
-                if (isTab = true) {
-                    tabUrl += "?source=teamstab"  + ctxParams ;
-                } 
-                // else {
-                //     tabUrl += "?source=teamsweb";
-                // }
-                return tabUrl
+    <script type="text/javascript">  
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+    
+        function ValidateContextSelection()  
+        {  
+            var checkboxes = document.getElementsByName("teams_ctx");  
+            
+            var numberOfCheckedItems = 0;
+            var str = "?source=teamstab";  
+            for(var i = 0; i < checkboxes.length; i++)  
+            {  
+                if(checkboxes[i].checked){  
+                    numberOfCheckedItems++;
+                    str += "&" + checkboxes[i].value + "={" + checkboxes[i].value + "}"
+                }
             }
 
+            document.getElementById("qry").innerText = str
+        }
 
-            console.log( "Teams.initialize()" );
-            microsoftTeams.initialize();
-            let saveGray = () => {
+        let savePowerTab = () => {
                 console.log( "set OnSave" );
                 microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
                     console.log( "set config :" + getUrl(idPowerApp, true)  );
@@ -71,38 +44,234 @@
                     saveEvent.notifySuccess();
                     console.log( "ready to close" );
                 });
+            }          
+        
+        </script>
+</head>
+        
+    <body>
+    <!--"teamId": "The Microsoft Teams ID in the format 19:[id]@thread.skype",
+        "teamName": "The name of the current team",
+        "channelId": "The channel ID in the format 19:[id]@thread.skype",
+        "channelName": "The name of the current channel",
+        "chatId": "The chat ID in the in the format 19:[id]@thread.skype",
+        "locale": "The current locale of the user formatted as languageId-countryId (for example, en-us)",
+        "entityId": "The developer-defined unique ID for the entity this content points to",
+        "subEntityId": "The developer-defined unique ID for the sub-entity this content points to",
+        "loginHint": "A value suitable as a login hint for Azure AD. This is usually the login name of the current user, in their home tenant",
+        "userPrincipalName": "The User Principal Name of the current user, in the current tenant",
+        "userObjectId": "The Azure AD object id of the current user, in the current tenant",
+        "tid": "The Azure AD tenant ID of the current user",
+        "groupId": "Guid identifying the current O365 Group ID",
+        "theme": "The current UI theme: default | dark | contrast",
+        "isFullScreen": "Indicates whether the tab is in full-screen mode",
+        "userLicenseType": "Indicates the user licence type in the given SKU (for example, student or teacher)",
+        "tenantSKU": "Indicates the SKU category of the tenant (for example, EDU)",
+        "channelType": "microsoftTeams.ChannelType.Private | microsoftTeams.ChannelType.Regular" -->
+
+        <legend>Teams context to share with PowerApps</legend>  
+        PowerAppId : <input type="text" id="PowerAppId" disabled width="80%"></input>
+        <table>
+            <tr>
+                <td width= "50%">
+                    <input type="checkbox" name="source"    value="source"       checked    disabled onclick="return ValidateContextSelection();">source<br>  
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        checked    
+                        onclick="return ValidateContextSelection();"
+                        id="groupId"
+                        value="groupId"      
+                        title="Guid identifying the current O365 Group ID"
+                        >
+                    <label for="groupId">groupId</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        checked    
+                        onclick="return ValidateContextSelection();"
+                        id="teamId"
+                        value="teamId"      
+                        title="The Microsoft Teams ID in the format 19:[id]@thread.skype"
+                        >
+                    <label for="teamId">teamId</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        checked    
+                        onclick="return ValidateContextSelection();"
+                        id="channelId"
+                        value="channelId"      
+                        title="The channel ID in the format 19:[id]@thread.skype""
+                        >
+                    <label for="channelId">channelId</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        checked    
+                        onclick="return ValidateContextSelection();"
+                        id="chatId"
+                        value="chatId"      
+                        title="The chat ID in the in the format 19:[id]@thread.skype"
+                        >
+                    <label for="chatId">chatId</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        checked    
+                        onclick="return ValidateContextSelection();"
+                        id="theme"
+                        value="theme"      
+                        title="The current UI theme: default | dark | contrast"
+                        >
+                    <label for="theme"></label>theme<br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="teamName"
+                        value="teamName"      
+                        title="The name of the current team"
+                        >
+                    <label for="teamName">teamName</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="channelName"
+                        value="channelName"      
+                        title="The name of the current channel"
+                        >
+                    <label for="channelName">channelName</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="channelType"
+                        value="channelType"      
+                        title="microsoftTeams.ChannelType.Private | microsoftTeams.ChannelType.Regular"
+                        >
+                    <label for="channelType">channelType</label><br>                      
+
+                </td>
+                <td width= "50%">
+                        <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="entityId"
+                        value="entityId"      
+                        title="The developer-defined unique ID for the entity this content points to"
+                        >
+                    <label for="entityId">entityId</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="subEntityId"
+                        value="subEntityId"      
+                        title="The developer-defined unique ID for the sub-entity this content points to"
+                        >
+                    <label for="subEntityId">subEntityId</label><br>  
+
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="loginHint"
+                        value="loginHint"      
+                        title="A value suitable as a login hint for Azure AD. This is usually the login name of the current user, in their home tenant"
+                        >
+                    <label for="loginHint">loginHint</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="userPrincipalName"
+                        value="userPrincipalName"      
+                        title="The User Principal Name of the current user, in the current tenant"
+                        >
+                    <label for="userPrincipalName">userPrincipalName</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="userObjectId"
+                        value="userObjectId"      
+                        title="The Azure AD object id of the current user, in the current tenant"
+                        >
+                    <label for="userObjectId">userObjectId</label><br>  
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="tid"
+                        value="tid"      
+                        title="The Azure AD tenant ID of the current user"
+                        >
+                    <label for="tid">tid</label><br>                                                              
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="isFullScreen"
+                        value="isFullScreen"      
+                        title="Indicates whether the tab is in full-screen mode"
+                        >
+                    <label for="isFullScreen">isFullScreen</label><br>  
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="userLicenseType"
+                        value="userLicenseType"      
+                        title="Indicates the user licence type in the given SKU (for example, student or teacher)"
+                        >
+                    <label for="userLicenseType">userLicenseType</label><br>  
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        id="tenantSKU"
+                        value="tenantSKU"      
+                        title="Indicates the SKU category of the tenant (for example, EDU)"
+                        >
+                    <label for="tenantSKU">tenantSKU</label><br>  
+
+
+
+                </td>
+            </tr>
+        </table>
+
+        <label id="qry"></label><br> 
+
+        <!-- <button onclick="(document.getElementById('icon').src = '/_PowerApps.png'); colorClickGray()">
+            Use this</button>
+
+        <img id="icon" src="/_Teams.png" alt="icon" style="width:50px" /> -->
+        <script>
+            // var idTenant = "tenantId=2366459a-788c-49bd-92b6-b8700cf6ec17&"
+            var idPowerApp = getParameterByName('PowerAppId') || getParameterByName('app') || "unknown"
+            document.getElementById("PowerAppId").value = idPowerApp
+
+            let getUrl = (idPowerApp, isTab, addContext) => {
+                var tabUrl = "https://apps.powerapps.com/play/providers/Microsoft.PowerApps/apps/" + idPowerApp	
+                var ctxParams = document.getElementById("qry").innerText
+                //ctxParams +="&test={teamName}%20-%20{channelName}";
+
+                if (isTab = true) {
+                    tabUrl += ctxParams ;
+                } 
+                return tabUrl
             }
 
-            // let saveRed = () => {
-            //     microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
-            //         microsoftTeams.settings.setSettings({
-            //             websiteUrl: getUrl(idPowerApp, false) ,
-            //             contentUrl: getUrl(idPowerApp, true) ,
-            //             entityId: idPowerApp,
-            //             suggestedDisplayName: "PowerTab"
-            //         });
-            //         saveEvent.notifySuccess();
-            //     });
-            // }
+            console.log( "Teams.initialize()" );
+            microsoftTeams.initialize();
+            //todo: get previous settings and restore to UX 
+            ValidateContextSelection();
 
-            // let gr = document.getElementById("gray").style;
-            // let rd = document.getElementById("red").style;
+            //todo: make save conditional ?
+            console.log( "Ready to Save" );
+            microsoftTeams.settings.setValidityState(true);
+            savePowerTab()
 
-            const colorClickGray = () => {
-                // gr.display = "block";
-                // rd.display = "none";
-                console.log( "Ready to Save" );
-                microsoftTeams.settings.setValidityState(true);
-                saveGray()
-            }
-
-            // const colorClickRed = () => {
-            //     // rd.display = "block";
-            //     // gr.display = "none";
-            //     console.log( "Ready to Save" );
-            //     microsoftTeams.settings.setValidityState(true);
-            //     saveRed();
-            // }
         </script>
     </body>
 
