@@ -6,8 +6,10 @@
         {
             "label": "ngrok PowerTab",
             "type": "shell",
-            "command": "\\develop\\tools\\ngrok http \"file:///C:\\develop\\Teams\\PowerTab\" -subdomain powertab",
+            "command": "\\develop\\tools\\ngrok http \"file:///${workspaceRoot}\" -subdomain powertab",
             "problemMatcher": []
         }
+
+
     ]
 }
