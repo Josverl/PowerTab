@@ -1,4 +1,11 @@
-#powerapp 
+# powerapp 
+
+
+# live powertab site 
+
+for demos and Proof of concepts feel free to use the live configuration page located at:
+https://powertab.azurewebsites.net/config.html
+
 
 # onStart or onLoad
 
