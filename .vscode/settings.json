@@ -1,4 +1,8 @@
 {
     "appService.defaultWebAppToDeploy": "/subscriptions/a7162c29-8478-4bf4-a831-da8819b80496/resourceGroups/WebStuff/providers/Microsoft.Web/sites/powertab",
-    "appService.deploySubpath": "www"
+    "appService.deploySubpath": "www",
+    "cSpell.words": [
+        "Teamsified",
+        "glbsource"
+    ]
 }

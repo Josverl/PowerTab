@@ -1,11 +1,11 @@
 # PowerTab, (a PowerApp better integrated in a Teams Tab)
 
 Generating a Teams app [from a PowerApp is simple](https://docs.microsoft.com/en-us/powerapps/maker/canvas-apps/embed-teams-app), right ?  
-Unfortunatly after adding such a `Teamsified` PowerApp to your Team and Channel, the resulting _Teams Power App_ is pretty static, and it is not aware of the Team or Channel it is pinned to.
-And as such you may need to add additional configuration and navigation, or perhaps even create and mantain multiple copies of your PowerApp.
+Unfortunately after adding such a `Teamsified` PowerApp to your Team and Channel, the resulting _Teams Power App_ is pretty static, and it is not aware of the Team or Channel (or Chat) it is pinned to.
+And as such you may need to add additional configuration and navigation, or perhaps even create and maintain multiple copies of your PowerApp.
 
 This can be done a little smarter, by configuring Teams to pass the relevant information as query string parameters to your Power App.
-Then you cabn add a little logic to  read and make use of these these paramaters in your PowerApp.
+Then you can add a little logic to  read and make use of these these parameters in your PowerApp.
 
 relevant context information includes this such as : 
 * the Teams ID and Display Name 
@@ -28,18 +28,17 @@ You should create or change a Teams manifest to use the PowerTab config page hos
 Configuration page: `https://powertab.azurewebsites.net/config.html?PowerAppId=<ID_Of_Your_PowerApp>`
 
 after the change it should look something like this:  
-![manifest editor showing Tab configuration](img/conigured_teams_tab.png)
-
+![manifest editor showing Tab configuration](img/configured_teams_tab.png)
 
 # Live PowerTab site 
 for demos and Proof of concepts feel free to use the live configuration page located at:
 https://powertab.azurewebsites.net/config.html
 
 **Note: If you use the PoC page, you must be please know it has limited capacity and may change or stop working with no prior notice.**
-## Powerapp onStart or onLoad
+## PowerApp onStart or onLoad
 
 In powerApp you can retrieve the teams context, and store them in global variables  using the Param function `Param("TeamId")`.
-as there may be cases when the powerapp is started outside of Teams, you can use the Coalesce function to supply a sensible default  
+as there may be cases when the PowerApp is started outside of Teams, you can use the Coalesce function to supply a sensible default  
 
 below is the sample form
 
@@ -51,7 +50,7 @@ Set( glbChannelID, Param("channelId"));
 Set( glbUPN, Param("upn") , "unknown"));
 Set( glbTenantID, Param("tenantId"));
 
-Set( glbTheme, Param("theme") , "Light"));
+Set( glbTheme, Param("theme") , "light"));
 Set( glbLoginHint, Param("loginHint"));
 Set( glbTid, Param("tid"));
 
@@ -70,12 +69,11 @@ ClearCollect(
         channelID: Coalesce( Param("channelId"), "unknown"),
         teamName: Coalesce( Param("teamName"), "unknown"),
         channelName: Coalesce( Param("channelName"), "unknown"),
-        theme: Coalesce( Param("theme"), "unknown")
+        theme: Coalesce( Param("theme"), "light")
     }
 )
 
 ```
-
 
 ## Easy option to create a PowerApp for embedding in Teams 
 
@@ -84,13 +82,13 @@ for best results :
 - Add a Tab,
 - Select PowerApps 
 - Click the link at the bottom : `Or create an app in Power Apps` 
-![alt](./img/create_in_powerapps.png)
+![image of link in Teams to create PowerApp ](./img/create_in_PowerApps.png)
 
 This will start a PowerApp that has the additional benefits of 
-- A Teams Purple theme for your app 
+- A Teams Purple theme for your PowerApp 
 - Automatic scaling   
-# The Details 
 
+# The Details 
 ## All supported URL parameters 
 
 Parameters :
@@ -114,7 +112,7 @@ Parameters :
 
 Notes:  
 - Parameter names are the same for Teams as for the PowerApp
-- camelCasing may lead to mistakes, as the url string parameters are Case sensative.
+- camelCasing may lead to mistakes, as the url string parameters are Case sensitive.
 
 
 
