@@ -1,4 +1,4 @@
-# powerapp 
+# PowerTab, (a PowerApp better integrated in a Teams Tab)
 
 Generating a Teams app [from a PowerApp is simple](https://docs.microsoft.com/en-us/powerapps/maker/canvas-apps/embed-teams-app), right ?
 unfortunatly after adding such a Teamsified PowerApp to your Team / channel, the Powerapp is pretty static, and it is not aware of the Team or Channel it is pinned to, and as such you may need to add additional configuration and navigation,
