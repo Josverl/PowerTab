@@ -7,12 +7,24 @@ And as such you may need to add additional configuration and navigation, or perh
 This can be done a little smarter, by configuring Teams to pass the relevant information as query string parameters to your Power App.
 Then you can add a little logic to  read and make use of these these parameters in your PowerApp.
 
-relevant context information includes this such as : 
-* the Teams ID and Display Name 
-* the channel ID and Display Name
-* the theme ( dark / light / accessible) 
 
-General steps :
+This can be achieved by using a custom configuration page, that takes the PowerApp Application ID, and performs the relevant configuration so that Teams will pass the relevant information to your PowerApp.
+This page is only involved during the initial configuration, after this its just Teams and your PowerApp (with some additional information)   
+
+The relevant context information includes this such as : 
+* The Teams ID and Teams Display Name 
+* The channel ID and Channel Display Name
+* The theme (dark, light, accessible) 
+
+## Use cases 
+
+- Display the Teams and Channel name
+- use the Theme to determine when to render a high contrast UX  
+- use the Teams ID 
+- Use the entity ID in a deeplink to show information regarding a specific  Mention 
+
+
+## General steps :
 1. Create a PowerApp
 2. Save & Publish your PowerApp 
 3. Download the Teams manifest for your PowerApp 
@@ -34,7 +46,7 @@ after the change it should look something like this:
 for demos and Proof of concepts feel free to use the live configuration page located at:
 https://powertab.azurewebsites.net/config.html
 
-**Note: If you use the PoC page, you must be please know it has limited capacity and may change or stop working with no prior notice.**
+**Note: If you use the PoC page, please be aware it has limited capacity and may change or stop working with no prior notice.**
 ## PowerApp onStart or onLoad
 
 In powerApp you can retrieve the teams context, and store them in global variables  using the Param function `Param("TeamId")`.
@@ -43,7 +55,7 @@ as there may be cases when the PowerApp is started outside of Teams, you can use
 below is the sample form
 
 ``` PowerApp 
-// collect Teams context in App.OnStart
+// get Teams context in App.OnStart
 Set( glbsource, Param("source"));
 Set( glbTeamId, Param("teamId"));
 Set( glbChannelID, Param("channelId"));
@@ -55,23 +67,23 @@ Set( glbLoginHint, Param("loginHint"));
 Set( glbTid, Param("tid"));
 
 ```
-Note:  the parameters names are case sensitive 
+Note: The parameters names are case sensitive 
 
 to limit the number of global variables you may choose to collect them as a single glbTeamsContext record instead. 
 ``` PowerApp 
-// collect Teams context in App.OnStart
-// single record 
-ClearCollect(
+// get Teams context in App.OnStart as a single  record 
+Set(
     TeamsCtx,
     {
-        source: Coalesce(Param("source"), "unknown"),
-        teamId: Coalesce(Param("teamId"), "unknown"),
-        channelID: Coalesce( Param("channelId"), "unknown"),
-        teamName: Coalesce( Param("teamName"), "unknown"),
-        channelName: Coalesce( Param("channelName"), "unknown"),
+        source: Coalesce(Param("source"), "source unknown"),
+        teamId: Coalesce(Param("teamId"), "0"),
+        channelID: Coalesce( Param("channelId"), "Channel unknown"),
+        teamName: Coalesce( Param("teamName"), "Team unknown"),
+        channelName: Coalesce( Param("channelName"), "0"),
         theme: Coalesce( Param("theme"), "light")
     }
-)
+); 
+
 
 ```
 
@@ -86,7 +98,7 @@ for best results :
 
 This will start a PowerApp that has the additional benefits of 
 - A Teams Purple theme for your PowerApp 
-- Automatic scaling   
+- Automatic scaling / adjustment of the screen size
 
 # The Details 
 ## All supported URL parameters 
