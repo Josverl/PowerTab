@@ -126,6 +126,16 @@
                     <label for="theme"></label>theme<br>  
 
                     <input type="checkbox" 
+                    name="teams_ctx" 
+                    onclick="return ValidateContextSelection();"
+                    checked
+                    id="teamSiteUrl"
+                    value="teamSiteUrl"      
+                    title="The SharePoint site for the Team or private channel"
+                    >
+                    <label for="teamSiteUrl">teamSiteUrl</label><br>  
+
+                    <input type="checkbox" 
                         name="teams_ctx" 
                         onclick="return ValidateContextSelection();"
                         id="teamName"
@@ -237,13 +247,22 @@
                     <input type="checkbox" 
                     name="teams_ctx" 
                     onclick="return ValidateContextSelection();"
-                    id="teamSiteUrl"
-                    value="teamSiteUrl"      
-                    title="Private channel: Set to the URL of a distinct, unique SharePoint site for the private channel"
+                    id="teamType"
+                    value="teamType"      
+                    title="The type of the team."
                     >
-                    <label for="teamSiteUrl">teamSiteUrl</label><br>  
-                     
+                    <label for="teamType">teamType</label><br>  
 
+                    
+                    <input type="checkbox" 
+                    name="teams_ctx" 
+                    onclick="return ValidateContextSelection();"
+                    id="userTeamRole"
+                    value="userTeamRole"      
+                    title="The user's role in the team. Because a malicious party can run your content in a browser, this value should be used only as a hint as to the user's role, and never as proof of her role."
+                    >
+                    <label for="userTeamRole">userTeamRole</label><br>                      
+                    
                 </td>
             </tr>
         </table>

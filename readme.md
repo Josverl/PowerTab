@@ -5,7 +5,8 @@ Unfortunately after adding such a `Teamsified` PowerApp to your Team and Channel
 And as such you may need to add additional configuration and navigation, or perhaps even create and maintain multiple copies of your PowerApp.
 
 This can be done a little smarter, by configuring Teams to pass the relevant information as query string parameters to your Power App
-using [url placeholder values](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/access-teams-context#getting-context-by-inserting-url-placeholder-values). 
+using [url placeholder values](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/access-teams-context#getting-context-by-inserting-url-placeholder-values).  
+Note:  Additional context parameters are/may be documented as part of the [javascript sdk Teams Context](https://docs.microsoft.com/en-us/javascript/api/@microsoft/teams-js/microsoftteams.context?view=msteams-client-js-latest). 
 
 Then you can add a little logic to the PowerApp to read and make use of this information.
 
@@ -75,11 +76,24 @@ Set(
     TeamsCtx,
     {
         source: Coalesce(Param("source"), "source unknown"),
-        teamId: Coalesce(Param("teamId"), "0"),
-        channelID: Coalesce( Param("channelId"), "Channel unknown"),
+        teamId: Coalesce(Param("teamId"), "19:[id]@thread.skype"),
+        channelID: Coalesce( Param("channelId"), "19:[id]@thread.skype"),
         teamName: Coalesce( Param("teamName"), "Team unknown"),
-        channelName: Coalesce( Param("channelName"), "0"),
+        channelName: Coalesce( Param("channelName"), "Channel Unknown"),
+        chatId: Coalesce( Param("chatId"), "19:[id]@thread.skype")
+
         theme: Coalesce( Param("theme"), "light")
+
+        channelType: Coalesce( Param("channelType"), "")
+        teamSiteUrl: Coalesce( Param("teamSiteUrl"), "")
+
+        locale: Coalesce( Param("locale"), "")
+        entityId: Coalesce( Param("entityId"), "")
+        subEntityId: Coalesce( Param("subEntityId"), "")
+        tid: Coalesce( Param("tid"), "")
+        isFullScreen: Coalesce( Param("isFullScreen"), "")
+        userLicenseType: Coalesce( Param("userLicenseType"), "")
+        tenantSKU: Coalesce( Param("tenantSKU"), "")
     }
 ); 
 
