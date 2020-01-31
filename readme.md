@@ -4,13 +4,13 @@ Generating a Teams app [from a PowerApp is simple](https://docs.microsoft.com/en
 Unfortunately after adding such a `Teamsified` PowerApp to your Team and Channel, the resulting _Teams Power App_ is pretty static, and it is not aware of the Team or Channel (or Chat) it is pinned to.
 And as such you may need to add additional configuration and navigation, or perhaps even create and maintain multiple copies of your PowerApp.
 
-This can be done a little smarter, by configuring Teams to pass the relevant information as query string parameters to your Power App.
-Then you can add a little logic to  read and make use of these these parameters in your PowerApp.
+This can be done a little smarter, by configuring Teams to pass the relevant information as query string parameters to your Power App
+using [url placeholder values](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/access-teams-context#getting-context-by-inserting-url-placeholder-values). 
 
+Then you can add a little logic to the PowerApp to read and make use of this information.
 
 This can be achieved by using a custom configuration page, that takes the PowerApp Application ID, and performs the relevant configuration so that Teams will pass the relevant information to your PowerApp.
-This page is only involved during the initial configuration, after this its just Teams and your PowerApp (with some additional information)   
-
+This page is only involved during the initial configuration, after this its just Teams and your PowerApp (with some additional information)  
 The relevant context information includes this such as : 
 * The Teams ID and Teams Display Name 
 * The channel ID and Channel Display Name
@@ -22,7 +22,6 @@ The relevant context information includes this such as :
 - use the Theme to determine when to render a high contrast UX  
 - use the Teams ID 
 - Use the entity ID in a deeplink to show information regarding a specific  Mention 
-
 
 ## General steps :
 1. Create a PowerApp
