@@ -33,7 +33,8 @@
         let savePowerTab = () => {
                 console.log( "set OnSave" );
                 microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
-                    console.log( "set config :" + getUrl(idPowerApp, true)  );
+                    console.log( "set websiteUrl :" + getUrl(idPowerApp, false)  );
+                    console.log( "set contentUrl :" + getUrl(idPowerApp, true)  );
                     microsoftTeams.settings.setSettings({
                         websiteUrl: getUrl(idPowerApp, false) ,
                         contentUrl: getUrl(idPowerApp, true) ,

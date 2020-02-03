@@ -114,6 +114,23 @@ This will start a PowerApp that has the additional benefits of
 - Automatic scaling / adjustment of the screen size
 
 # The Details 
+
+## Teams Tab configuration 
+
+The following configuration is saved for the Tab: 
+ - **contentUrl: getUrl(idPowerApp, true)**  
+   This is the complete url to run the PowerApp in context of Teams, so this includes all the Teams replacement tokens that have been selected.
+
+ - **websiteUrl: getUrl(idPowerApp, false)**  
+   This is the complete url to run the PowerApp in a browser. This does not includes any of the Teams context replacement tokens, as they would not be replaced with the actual teams context.
+
+ - **entityId: idPowerApp**  
+    the PowerApp ID (a GUID)
+
+ - suggestedDisplayName: "PowerTab"  
+    The default name for the Tab 
+
+
 ## All supported URL parameters 
 
 Parameters :
@@ -122,7 +139,7 @@ Parameters :
  - "channelName": "The name of the current channel",
  - "chatId": "The chat ID in the in the format 19:[id]@thread.skype",
  - "locale": "The current locale of the user formatted as languageId-countryId (for example, en-us)",
- - "entityId": "The developer-defined unique ID for the entity this content points to",
+ - "entityId": "The developer-defined unique ID for the entity this content points to. (the PowerApp ID )",
  - "subEntityId": "The developer-defined unique ID for the sub-entity this content points to",
  - "loginHint": "A value suitable as a login hint for Azure AD. This is usually the login name of the current user, in their home tenant",
  - "userPrincipalName": "The User Principal Name of the current user, in the current tenant",
