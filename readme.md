@@ -119,10 +119,14 @@ This will start a PowerApp that has the additional benefits of
 
 The following configuration is saved for the Tab: 
  - **contentUrl: getUrl(idPowerApp, true)**  
-   This is the complete url to run the PowerApp in context of Teams, so this includes all the Teams replacement tokens that have been selected.
+   This is the complete url to run the PowerApp in context of Teams, so this includes all the Teams replacement tokens that have been selected.  
+    - contentUrl: `https://apps.powerapps.com/play/providers/Microsoft.PowerApps/apps/b78d9c7e-9e44-4217-9cf3-f46dd4be475f?source=teamstab&groupId={groupId}&teamId={teamId}&channelId={channelId}&chatId={chatId}&theme={theme}&teamSiteUrl={teamSiteUrl}` 
+
 
  - **websiteUrl: getUrl(idPowerApp, false)**  
-   This is the complete url to run the PowerApp in a browser. This does not includes any of the Teams context replacement tokens, as they would not be replaced with the actual teams context.
+   This is the complete url to run the PowerApp in a browser. This does not includes any of the Teams context replacement tokens, as they would not be replaced with the actual teams context. To allow an App to determine how it is opened, the only query string parameter provided is : `source=teamsopenwebsite`
+
+    - websiteUrl: `https://apps.powerapps.com/play/providers/Microsoft.PowerApps/apps/b78d9c7e-9e44-4217-9cf3-f46dd4be475f?source=teamsopenwebsite`
 
  - **entityId: idPowerApp**  
     the PowerApp ID (a GUID)
