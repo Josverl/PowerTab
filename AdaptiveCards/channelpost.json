@@ -1,0 +1,31 @@
+{
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+        {
+            "type": "Image",
+            "altText": "",
+            "url": "https://www.carlosag.net/images/PowerApps-Logo.png",
+            "size": "Medium",
+            "horizontalAlignment": "Right"
+        },
+        {
+            "type": "TextBlock",
+            "text": "message text",
+            "id": ""
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Action.OpenUrl",
+                    "id": "1",
+                    "style": "positive",
+                    "url": "https://a.b.c"
+                }
+            ]
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+}

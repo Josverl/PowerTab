@@ -34,6 +34,9 @@ The relevant context information includes this such as :
 5. Retrieve the teams context parameters in PowerApp 
 6. Use this Teams context in your PowerApp to drive an even better user and collaboration experience      
 
+One example it to use the teams Context information to create a [Deeplink](Deeplinks.md) to your tab,  
+that you can send in a adaptive card. That deeplink will allow the recipient to return directly to your tab, and can optionally include relevant information on their action / response in the subEntityID
+
 ## Teams manifest - Team tab (a.k.a. Configurable Tab) 
 
 You should create or change a Teams manifest to use the PowerTab config page hosted as the PoC or to your own copy.
@@ -41,6 +44,9 @@ Configuration page: `https://powertab.azurewebsites.net/config.html?PowerAppId=<
 
 after the change it should look something like this:  
 ![manifest editor showing Tab configuration](img/configured_teams_tab.png)
+
+Example [Manifest](manifest/manifest.json)
+
 
 # Live PowerTab site 
 for demos and Proof of concepts feel free to use the live configuration page located at:
@@ -71,28 +77,30 @@ Note: The parameters names are case sensitive
 
 to limit the number of global variables you may choose to collect them as a single glbTeamsContext record instead. 
 ``` PowerApp 
-// get Teams context in App.OnStart as a single  record 
+// get Teams context in App.OnStart as a single record / variable
 Set(
-    TeamsCtx,
+    glbTeamsContext,
     {
-        source: Coalesce(Param("source"), "source unknown"),
-        teamId: Coalesce(Param("teamId"), "19:[id]@thread.skype"),
-        channelID: Coalesce( Param("channelId"), "19:[id]@thread.skype"),
+        source: Coalesce(Param("source"), "web"),
+        groupId: Coalesce(Param("groupId"), "00000000-0000-0000-0000-000000000000"),
+        teamId: Coalesce(Param("teamId"), "19:[team-id]@thread.skype"),
+        channelId: Coalesce( Param("channelId"), "19:[channel-id]@thread.skype"),
         teamName: Coalesce( Param("teamName"), "Team unknown"),
-        channelName: Coalesce( Param("channelName"), "Channel Unknown"),
-        chatId: Coalesce( Param("chatId"), "19:[id]@thread.skype")
+        channelName: Coalesce( Param("channelName"), "Channel unknown"),
+        chatId: Coalesce( Param("chatId"), "19:[chat-id]@thread.skype"),
 
-        theme: Coalesce( Param("theme"), "light")
+        theme: Coalesce( Param("theme"), "light"),
 
-        channelType: Coalesce( Param("channelType"), "")
-        teamSiteUrl: Coalesce( Param("teamSiteUrl"), "")
+        channelType: Coalesce( Param("channelType"), ""),
+        teamSiteUrl: Coalesce( Param("teamSiteUrl"), ""),
 
-        locale: Coalesce( Param("locale"), "")
-        entityId: Coalesce( Param("entityId"), "")
-        subEntityId: Coalesce( Param("subEntityId"), "")
-        tid: Coalesce( Param("tid"), "")
-        isFullScreen: Coalesce( Param("isFullScreen"), "")
-        userLicenseType: Coalesce( Param("userLicenseType"), "")
+        locale: Coalesce( Param("locale"), ""),
+        entityId: Coalesce( Param("entityId"), ""),
+        subEntityId: Coalesce( Param("subEntityId"), ""),
+        
+        tid: Coalesce( Param("tid"), ""),
+        isFullScreen: Coalesce( Param("isFullScreen"), ""),
+        userLicenseType: Coalesce( Param("userLicenseType"), ""),
         tenantSKU: Coalesce( Param("tenantSKU"), "")
     }
 ); 
