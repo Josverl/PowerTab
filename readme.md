@@ -28,11 +28,11 @@ The relevant context information includes this such as :
 1. Create a PowerApp
 2. Save & Publish your PowerApp 
 3. Download the Teams manifest for your PowerApp 
-4  Import and Open the Teams App Manifest in [Teams App Studio](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/app-studio-overview#manifest-editor) 
-3. Change the Teams app manifest to to change the configurable tab as in the below section
-4. Use the PowerTab configuration page to configure which parameters you want to pass to your PowerApp
-5. Retrieve the teams context parameters in PowerApp 
-6. Use this Teams context in your PowerApp to drive an even better user and collaboration experience      
+4.  Import and Open the Teams App Manifest in [Teams App Studio](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/app-studio-overview#manifest-editor) 
+5. Change the Teams app manifest to to change the configurable tab as in the below section
+6. Use the PowerTab configuration page to configure which parameters you want to pass to your PowerApp
+7. Retrieve the teams context parameters in PowerApp 
+8. Use this Teams context in your PowerApp to drive an even better user and collaboration experience      
 
 One example it to use the teams Context information to create a [Deeplink](Deeplinks.md) to your tab,  
 that you can send in a adaptive card. That deeplink will allow the recipient to return directly to your tab, and can optionally include relevant information on their action / response in the subEntityID
@@ -55,28 +55,17 @@ https://powertab.azurewebsites.net/config.html
 **Note: If you use the PoC page, please be aware it has limited capacity and may change or stop working with no prior notice.**
 ## PowerApp onStart or onLoad
 
-In powerApp you can retrieve the teams context, and store them in global variables  using the Param function `Param("TeamId")`.
-as there may be cases when the PowerApp is started outside of Teams, you can use the Coalesce function to supply a sensible default  
+In PowerApp you can retrieve the Teams context, and store them in a global variable using the Param function `Param("TeamId")`.
+As there may be cases when the PowerApp is started outside of Teams, you can use the Coalesce function to supply a sensible default  
 
-below is the sample form
+Below is a sample to store the teams context in a single global variable (a record) 
+so that you can retrieve the Teams Displayname as `glbTeamsContext.teamName`
 
+`PowerApp App.OnStart: `
 ``` PowerApp 
-// get Teams context in App.OnStart
-Set( glbsource, Param("source"));
-Set( glbTeamId, Param("teamId"));
-Set( glbChannelID, Param("channelId"));
-Set( glbUPN, Param("upn") , "unknown"));
-Set( glbTenantID, Param("tenantId"));
+// If specified, the Teams App ID can be used to generate deeplinks to this Tab
+Set(TeamsAppID, "12345678-1234-1234-1234-123456789ABC");
 
-Set( glbTheme, Param("theme") , "light"));
-Set( glbLoginHint, Param("loginHint"));
-Set( glbTid, Param("tid"));
-
-```
-Note: The parameters names are case sensitive 
-
-to limit the number of global variables you may choose to collect them as a single glbTeamsContext record instead. 
-``` PowerApp 
 // get Teams context in App.OnStart as a single record / variable
 Set(
     glbTeamsContext,
@@ -104,11 +93,23 @@ Set(
         tenantSKU: Coalesce( Param("tenantSKU"), "")
     }
 ); 
+```
+_Note: The parameters names are case sensitive._
 
+
+**Alternatively you can just retrieve a few specific parameters.**
+``` PowerApp 
+// get Teams context from the QueryString in App.OnStart
+Set( glbsource, Param("source"));
+Set( glbTeamId, Param("teamId"));
+Set( glbChannelID, Param("channelId"));
+Set( glbTheme, Param("theme") , "light"));
 
 ```
 
-## Easy option to create a PowerApp for embedding in Teams 
+
+
+## Best option to create a PowerApp for embedding in Teams 
 
 for best results : 
 - Start in a Teams channel
@@ -118,8 +119,8 @@ for best results :
 ![image of link in Teams to create PowerApp ](./img/create_in_PowerApps.png)
 
 This will start a PowerApp that has the additional benefits of 
-- A Teams Purple theme for your PowerApp 
-- Automatic scaling / adjustment of the screen size
+- A **Teams Purple theme** for your PowerApp 
+- **Automatic scaling / adjustment** of the screen size
 
 # The Details 
 
@@ -143,7 +144,7 @@ The following configuration is saved for the Tab:
     The default name for the Tab 
 
 
-## All supported URL parameters 
+## Most supported URL parameters 
 
 Parameters :
  - "teamName": "The name of the current team",
@@ -168,5 +169,9 @@ Notes:
 - Parameter names are the same for Teams as for the PowerApp
 - camelCasing may lead to mistakes, as the url string parameters are Case sensitive.
 
+#### References:
 
+- [Teams Context URL Placeholders](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/access-teams-context#getting-context-by-inserting-url-placeholder-values)
+- [Teams Context URL Placeholders - Private Channels](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/access-teams-context#retrieving-context-in-private-channels)
+- [Teams SDK - Context](https://docs.microsoft.com/en-us/javascript/api/@microsoft/teams-js/microsoftteams.context?view=msteams-client-js-latest)
 

@@ -126,6 +126,16 @@
                         name="teams_ctx" 
                         checked    
                         onclick="return ValidateContextSelection();"
+                        id="hostClientType"
+                        value="hostClientType"      
+                        title="The type of the host client. Possible values are : android, ios, web, desktop, rigel"
+                        >
+                    <label for="hostClientType">hostClientType</label><br> 
+
+                    <input type="checkbox" 
+                        name="teams_ctx" 
+                        checked    
+                        onclick="return ValidateContextSelection();"
                         id="theme"
                         value="theme"      
                         title="The current UI theme: default | dark | contrast"
@@ -133,40 +143,43 @@
                     <label for="theme"></label>theme<br>  
 
                     <input type="checkbox" 
-                    name="teams_ctx" 
-                    onclick="return ValidateContextSelection();"
-                    checked
-                    id="teamSiteUrl"
-                    value="teamSiteUrl"      
-                    title="The SharePoint site for the Team or private channel"
+                        name="teams_ctx" 
+                        onclick="return ValidateContextSelection();"
+                        checked
+                        id="teamSiteUrl"
+                        value="teamSiteUrl"      
+                        title="The SharePoint site for the Team or private channel"
                     >
                     <label for="teamSiteUrl">teamSiteUrl</label><br>  
 
                     <input type="checkbox" 
                         name="teams_ctx" 
                         onclick="return ValidateContextSelection();"
+                        checked
                         id="teamName"
                         value="teamName"      
                         title="The name of the current team"
-                        >
+                    >
                     <label for="teamName">teamName</label><br>  
 
                     <input type="checkbox" 
                         name="teams_ctx" 
                         onclick="return ValidateContextSelection();"
+                        checked
                         id="channelName"
                         value="channelName"      
                         title="The name of the current channel"
-                        >
+                    >
                     <label for="channelName">channelName</label><br>  
 
                     <input type="checkbox" 
                         name="teams_ctx" 
                         onclick="return ValidateContextSelection();"
+                        checked
                         id="channelType"
                         value="channelType"      
                         title="microsoftTeams.ChannelType.Private | microsoftTeams.ChannelType.Regular"
-                        >
+                    >
                     <label for="channelType">channelType</label><br>                      
 
                 </td>
@@ -174,19 +187,21 @@
                         <input type="checkbox" 
                         name="teams_ctx" 
                         onclick="return ValidateContextSelection();"
+                        checked
                         id="entityId"
                         value="entityId"      
                         title="The developer-defined unique ID for the entity this content points to"
-                        >
+                    >
                     <label for="entityId">entityId</label><br>  
 
                     <input type="checkbox" 
                         name="teams_ctx" 
                         onclick="return ValidateContextSelection();"
+                        checked
                         id="subEntityId"
                         value="subEntityId"      
                         title="The developer-defined unique ID for the sub-entity this content points to"
-                        >
+                    >
                     <label for="subEntityId">subEntityId</label><br>  
 
 
@@ -260,6 +275,14 @@
                     >
                     <label for="teamType">teamType</label><br>  
 
+                    <input type="checkbox" 
+                    name="teams_ctx" 
+                    onclick="return ValidateContextSelection();"
+                    id="locale"
+                    value="locale"      
+                    title="The current locale of the user formatted as languageId-countryId (for example, en-us)."
+                    >
+                    <label for="locale">locale</label><br>  
                     
                     <input type="checkbox" 
                     name="teams_ctx" 
@@ -302,8 +325,7 @@
             microsoftTeams.initialize();
             //todo: get previous settings and restore to UX 
             ValidateContextSelection();
-
-            //todo: make save conditional ?
+           
             console.log( "Ready to Save" );
             microsoftTeams.settings.setValidityState(true);
             savePowerTab()
