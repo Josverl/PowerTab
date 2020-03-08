@@ -1,9 +1,9 @@
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
     "manifestVersion": "1.5",
-    "version": "1.0.1",
-    "id": "3473de8a-213b-4f80-b02c-ef6ed8252b25",
-    "packageName": "jos.verlinde.powertab",
+    "version": "1.0.5",
+    "id": "fa83acac-f0de-43f9-b3d3-8249ed47f821",
+    "packageName": "Jos.Verlinde.PowerTab.fa83acac-f0de-43f9-b3d3-8249ed47f821",
     "developer": {
         "name": "Jos Verlinde",
         "websiteUrl": "https://www.microsoft.com",
@@ -15,8 +15,8 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "Teams App",
-        "full": "a Teams App built using PowerApps and the Powertab configuration tool."
+        "short": "PowerTab",
+        "full": "a Teams App built using PowerApp and the Powertab configuration tool."
     },
     "description": {
         "short": "Teams App is an app built using PowerApps",
@@ -25,26 +25,27 @@
     "accentColor": "#6865AB",
     "configurableTabs": [
         {
-            "configurationUrl": "https://powertab.azurewebsites.net/config.html?PowerAppId=b78d9c7e-9e44-4217-9cf3-f46dd4be475f",
+            "configurationUrl": "https://powertab.azurewebsites.net/config.html?PowerAppId=fa83acac-f0de-43f9-b3d3-8249ed47f821&all=true",
             "canUpdateConfiguration": true,
             "scopes": [
                 "team",
                 "groupchat"
+            ],
+            "supportedSharePointHosts": [
+                "sharePointFullPage"
             ]
         }
     ],
     "staticTabs": [
         {
-            "entityId": "b78d9c7e-9e44-4217-9cf3-f46dd4be475f",
+            "entityId": "fa83acac-f0de-43f9-b3d3-8249ed47f821",
             "name": "Teams App",
-            "contentUrl": "https://apps.powerapps.com/play/a78d9c7e-9e44-4217-9cf3-f46dd4be475f?tenantId=02f988bf-86f1-41ax-91ab-2d7cd011db47&source=teamstab",
-            "websiteUrl": "https://apps.powerapps.com/play/a78d9c7e-9e44-4217-9cf3-f46dd4be475f?tenantId=02f988bf-86f1-41ax-91ab-2d7cd011db47",
+            "contentUrl": "https://apps.powerapps.com/play/fa83acac-f0de-43f9-b3d3-8249ed47f821?tenantId=f1265e86-ad12-460a-bd6b-e0f9394bc80b&source=teamstab",
+            "websiteUrl": "https://apps.powerapps.com/play/fa83acac-f0de-43f9-b3d3-8249ed47f821?tenantId=f1265e86-ad12-460a-bd6b-e0f9394bc80b",
             "scopes": [
                 "personal"
             ]
         }
-    ],
-    "bots": [
     ],
     "permissions": [
         "identity",
