@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Microsoft Teams JavaScript API (via CDN) -->
+    <script 
+        src="https://statics.teams.cdn.office.net/sdk/v1.6.0/js/MicrosoftTeams.min.js" 
+        integrity="sha384-mhp2E+BLMiZLe7rDIzj19WjgXJeI32NkPvrvvZBrMi5IvWup/1NUfS5xuYN5S3VT" 
+        crossorigin="anonymous">
+    </script>
+   
+    <script type="text/javascript">  
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+    
+
+
+        // transform the url for use in a tab
+        let getUrl = ( pageUrl, isTab) => {
+                if (isTab){
+                    // "https://m365x207758.sharepoint.com/sites/developmentteam/_layouts/15/teamslogon.aspx?spfx=true&dest=https%3A%2F%2Fm365x207758.sharepoint.com%2Fsites%2FDevelopmentTeam%2FSitePages%2FHome.aspx"
+                    //  https://m365x207758.sharepoint.com/sites/developmentteam/_layouts/15/teamslogon.aspx?spfx=true&dest=https%3A%2F%2Fm365x207758.sharepoint.com%2Fsites%2FDevelopmentTeam%2FSitePages%2FHome.aspx
+                    const url = new URL(pageUrl);
+                    // 
+                    const tenant = url.host // "m365x207758.sharepoint.com"
+                    
+                    //const sitePath = "sites/developmentteam" // url.pathname.split('/').slice(0, 1).join('/');// "sites/developmentteam"
+                    // take the first 2 nodes of the path ( to the SPO SiteCollection root  )
+                    const sitePath = url.pathname.split("/").slice(1,3).join('/')
+                    const destEncoded= encodeURIComponent(pageUrl)
+                    //ES6 template string
+                    pageUrl = `https://${tenant}/${sitePath}/_layouts/15/teamslogon.aspx?spfx=true&dest=${destEncoded}`
+
+
+                    return pageUrl;
+                } else {
+                    // just the same page url
+                    return pageUrl;
+                }
+                
+            }
+
+        let saveSPOTab = () => {
+                console.log( "set OnSave" );
+
+
+
+                //const pageName = pageExt.split['.'][0]
+
+                microsoftTeams.settings.registerOnSaveHandler((saveEvent) => {
+
+                    // tease apart the url
+                    const pageUrl = new URL(document.getElementById("spoURL").value);
+                    const pageName = pageUrl.pathname.split('/').pop()
+                    try {
+                        pageName = pageName.split('.')[0]
+                    } catch (error) {
+                        // nope
+                    }
+                    console.log( "set websiteUrl :" + getUrl(pageUrl.href, false)  );
+                    console.log( "set contentUrl :" + getUrl(pageUrl.href, true)  );
+                    microsoftTeams.settings.setSettings({
+                        websiteUrl: getUrl(pageUrl.href, false) ,
+                        contentUrl: getUrl(pageUrl.href, true) ,
+                        entityId: document.getElementById("entityId").value ,
+                        suggestedDisplayName: pageName
+                    });
+                    console.log( "config saved" );
+                    saveEvent.notifySuccess();
+                    console.log( "ready to close" );
+                });
+            }          
+        
+        </script>
+</head>
+        
+    <body>
+
+        <legend>SharePoint Page v4.3</legend>  
+
+        <br/>
+        SpoURL :
+        <br/>
+        <input type="text" id="spoURL" style="width: 100%;" value="https://m365x207758.sharepoint.com/sites/hr/learn"></input>
+        <br/>
+        <br/>
+        Page name/entityId
+        <br/>
+        <input type="text" id="entityId" style="width: 40%;" value="PageName"></input>
+        
+        <label id="qry"></label><br> 
+
+        <script>
+
+            console.log( "Teams.initialize()" );
+            microsoftTeams.initialize();
+            //todo: get previous settings and restore to UX 
+            saveSPOTab();
+           
+            console.log( "Ready to Save" );
+            microsoftTeams.settings.setValidityState(true);
+            saveSPOTab()
+
+        </script>
+    </body>
+
+</html>
