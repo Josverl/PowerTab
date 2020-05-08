@@ -10,6 +10,8 @@ Note:  Additional context parameters are/may be documented as part of the [javas
 
 Then you can add a little logic to the PowerApp to read and make use of this information.
 
+As of march 2020 this is now a standard feature in PowerApps , but not please read on if you want to add addintional context variables in your app manifest.
+
 This can be achieved by using a custom configuration page, that takes the PowerApp Application ID, and performs the relevant configuration so that Teams will pass the relevant information to your PowerApp.
 This page is only involved during the initial configuration, after this its just Teams and your PowerApp (with some additional information)  
 The relevant context information includes this such as : 
