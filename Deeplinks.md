@@ -15,11 +15,13 @@ UpdateContext({
                         ",""channelId"":""" & TeamsCtx.channelId & """}" 
 });
 
-// https://teams.microsoft.com/l/entity/<appId>/<entityId>?webUrl=<entityWebUrl>&label=<entityLabel>&context=<context>
+// https://teams.microsoft.com/l/entity/<teamsAppId>/<entityId>?webUrl=<entityWebUrl>&label=<entityLabel>&context=<context>
+// the teams AppId is the Teams Manifest AppId, 
+// or the Teams Internal AppId that can be found using the graph API 
 
 UpdateContext({
    locDeepLink : 
-        "https://teams.microsoft.com/l/entity/" & TeamsAppID & "/" & TeamsCtx.entityId 
+        "https://teams.microsoft.com/l/entity/" & TeamsCtx.teamsAppID & "/" & TeamsCtx.entityId 
         & "?webUrl=" & EncodeUrl( "https://powertab.azurewebsites.net/") 
         & "&label=" & EncodeUrl("Item 42") 
         & "&context=" & EncodeUrl( locContext)
@@ -34,7 +36,7 @@ PowerAppsbutton_1.Run(
 ```
 
 ## Detecting and acting on a 'incoming link' that contains a subentity ID 
-Requirement: configure your Tab to pass the subentityIDs
+Requirement: configure your Tab/bot to pass the subentityIDs in an adaptive card or other link.
 
 **App.OnStart**
 ```
