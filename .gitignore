@@ -3,3 +3,4 @@ desktop.ini
 .env
 nda
 
+.pytest_cache
